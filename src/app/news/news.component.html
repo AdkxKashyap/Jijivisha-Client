@@ -1,0 +1,87 @@
+<html>
+  <head></head>
+  <body>
+    <app-loading-element *ngIf="!newsIndia || !newsWorld"></app-loading-element>
+    
+    <button id="side-nav_mobile-nav" (click)="mobileNav($event)"  class=" btn btn-primary side-nav_mobile-nav ">
+      Global
+    </button>
+
+    <h4 class="side-nav_header">
+      Navigate to:
+    </h4>
+    <div class="side-nav">
+      <div class="menu">
+        <ul class="side-bar_ul">
+          <a [routerLink]="['./']" fragment="india_news">
+            <li>
+              <img
+                src="../../assets/india.png"
+                alt="India"
+                width="50px"
+                height="50px"
+              />
+              <span> India</span>
+            </li></a
+          >
+          <a [routerLink]="['./']" fragment="global_news">
+            <li>
+              <img
+                src="../../assets/earth-icon.png"
+                alt="Earth"
+                width="50px"
+                height="50px"
+              /><span>World</span>
+            </li>
+          </a>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <div id="india_news-div"  class="row">
+        <h2 id="india_news" class="col-md-8 col-sm-8 col-lg-7 heading">
+          India Latest Updates:
+        </h2>
+        <div
+          class="card card-news_india col-lg-5 offset-lg-1 col-md-4 col-sm-12"
+          *ngFor="let news of newsIndia"
+        >
+          <a [href]="news.href">
+            <div class="card-body">
+              <h5 class="card-title">{{ news.heading }}</h5>
+              <p class="card-text">{{ news.content }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div  class="row mt-5 align-items-center  justify-content-center">
+        <div class="col-xs-12 col-sm-8 col-lg-6 quotes-div">
+          <blockquote class="quotes">
+            The moment we stop fighting for each other,<br />
+            that’s the moment that we lose our humanity. <br />
+            <footer>
+              <cite title="Source Title"> Adrian Hemlsley (In the movie “2012”)</cite>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+      <h2 id="global_news" class="heading" style="margin-top: 4em;">
+        Global Latest Updates:
+      </h2>
+      <div id="global_news-div" class="row">
+        <div
+          class="card card-news_global col-lg-5 offset-lg-1 col-md-4 col-sm-12"
+          *ngFor="let news of newsWorld"
+        >
+          <a [href]="news.href">
+            <div class="card-body">
+              <h5 class="card-title">{{ news.heading }}</h5>
+              <p class="card-text">{{ news.content }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- <app-float-btn></app-float-btn> -->
+  </body>
+</html>

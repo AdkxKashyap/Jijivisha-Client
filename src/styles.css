@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    font-family: 'Comic Neue', cursive;
+}
+html{
+    scroll-behavior: smooth;
+}
+.container{
+    margin-top: 15%;
+  }
+
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .container{
+        margin-top: 10%;
+      }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    .container{
+        margin-top: 5%;
+      }
+  }

@@ -1,0 +1,93 @@
+<html>
+  <head></head>
+  <body>
+     <app-loading-element *ngIf="!allCovidData || !allAggData" ></app-loading-element>
+   
+    <div  class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-8 col-lg-7 header_1">
+          <h1>India COVID-19 Tracker</h1>
+        </div>
+        <div class="col-md-4 col-sm-4 col-lg-5 header_1">
+          <h5 class="header_2">Last Updated:{{ lastUpdated }}</h5>
+        </div>
+        <!-- Total Cases maps -->
+        <div class="geo-chart_div cards col-md-12 col-sm-12 col-lg-12">
+          <div id="chart_div" class="chart"></div>
+        </div>
+      </div>
+
+      <div data-aos="fade-up"  class="row mt-5 align-items-center  justify-content-center">
+        <div class="col-xs-12 col-sm-8 col-lg-6 quotes-div">
+          <blockquote class="quotes">
+            and when all the wars are over,a butterfly will  <br />
+              still be beautiful. <br />
+            <footer>
+              <cite title="Source Title"> Ruskin Bond, Scenes from a Writer's Life</cite>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" id="line-charts_div" class="row line_charts-div mt-5 cards">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <h5 style="color: #0277bd;">Total Cases:</h5>
+          <h3 style="color: #01579b;">{{ latestAggDataDict.totalCases }}</h3>
+          <div id="curve_chart_totalcases" class="line_charts"></div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <h5 style="color: #0277bd;">Recovered:</h5>
+          <h3 style="color: #01579b;">{{  latestAggDataDict.recovered  }}</h3>
+          <div id="curve_chart_totalrecovered" class="line_charts"></div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <h5 style="color: #0277bd;">Deaths:</h5>
+          <h3 style="color: #01579b;">{{ latestAggDataDict.deaths }}</h3>
+          <div id="curve_chart_totaldeaths" class="line_charts"></div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <h5 style="color: #0277bd;">Total Infected:</h5>
+          <h3 style="color: #01579b;">{{ latestAggDataDict.activeCases }}</h3>
+          <div id="curve_chart_activecases" class="line_charts"></div>
+        </div>
+      </div>
+
+
+     
+
+      <div data-aos="fade-up" class="row mt-5 all-data_div cards">
+        <div class="col-sm-12 col-lg-12"> 
+          <div class="col-lg-12 table-headline">
+            <p style="color: #aa00ff; margin-left: 30%;">
+              State-Wise Data:
+            </p>
+          </div>
+          <div class="table-responsive" style="">
+            <table id="data-table" class="table table-stripped table-hover" style="max-height: 50px; height: 50px;">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">State</th>
+                  <th scope="col">Total Cases</th>
+                  <th scope="col">Recovered</th>
+                  <th scope="col">Deaths</th>         
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of latestMainData">
+                  <th scope="row">{{ data.state }}</th>
+                  <td>{{ data.confirmed }}</td>
+                  <td>{{ data.recovered }}</td>
+                  <td>{{ data.deaths}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+          </div>
+          <app-float-btn></app-float-btn>
+    </div>
+  </body>
+</html>

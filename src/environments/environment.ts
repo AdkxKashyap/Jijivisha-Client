@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  GOOGLE_API_KEY: "AIzaSyCthmHDwxmbiH3VdPeNW6QW3gcYd-Km1-k",
+  PORT: "http://127.0.0.1:5000",
+  production: false,
 };
 
 /*
