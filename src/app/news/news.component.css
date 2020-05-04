@@ -1,0 +1,278 @@
+body {
+  background: #da4453; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #89216b,
+    #da4453
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #89216b,
+    #da4453
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
+}
+.heading {
+  margin-top: 55px;
+  margin-left: 15px;
+  color: aliceblue;
+}
+/* for blockquotes */
+.quotes-div {
+  
+}
+.quotes {
+  position: relative;
+  font-family: "Girassol", cursive;
+  font-size: 15px;
+  line-height: 30px;
+  color: #fce4ec;
+}
+.quotes footer {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 0.6em;
+  font-weight: 700;
+  color: #e1bee7;
+  float: right;
+  position: absolute;
+  right:0em;
+}
+.quotes footer::before {
+  content: "\2015";
+}
+.quotes::after {
+  content: "\201D";
+  position: absolute;
+  top: 0.28em;
+  right:0em;
+  font-size: 6em;
+  font-style: italic;
+  color: #e1bee7;
+  z-index: 1;
+}
+/* All cards */
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.5em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border: none;
+  border-radius: 10px;
+  transform: scale(1);
+  transition: all 0.2s ease-in;
+}
+/* .card-title {
+  
+}
+.card-text {
+  color: #880e4f;
+} */
+.card::after {
+  opacity: 1;
+  content: "View Full Article";
+  background-color: #9c27b0;
+  border-radius: 20px;
+  transform: translateY(0px);
+  margin-bottom: 5px;
+}
+.card:hover {
+  transform: scale(1.2);
+}
+/* Cards for india news */
+.card-news_india:hover {
+  background-color: #ec407a;
+  box-shadow: 2px 2px 20px #ad1456cb;
+}
+
+.card-news_india {
+  background-color: rgba(128, 128, 128, 0.199);
+}
+.card-news_india .card-title {
+  color: white;
+  font-weight: bold;
+}
+.card-news_india .card-text {
+  color: aliceblue;
+}
+
+/* Cards for Global news */
+.card-news_global:hover {
+  background-color: #ff1744;
+  box-shadow: 2px 2px 20px #d50000c9;
+}
+
+.card-news_global {
+  background-color: rgba(128, 128, 128, 0.137);
+}
+.card-news_global .card-title {
+  color: white;
+  font-weight: bold;
+}
+.card-news_global .card-text {
+  color: aliceblue;
+}
+
+@keyframes card {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+}
+
+/* no Side nav for mobile devices */
+.side-nav {
+  display: none;
+}
+.side-nav_header{
+display: none;
+}
+.side-nav_mobile-nav {
+  display: block;
+  position: fixed;
+  right: 0px;
+  top: 22.5%;
+  background-color: rgba(110, 43, 158, 0.795);
+  z-index: 98;
+  border: none;
+  transition: all 0.2s linear;
+}
+a {
+  text-decoration: none;
+
+  border: none;
+}
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .heading {
+    margin-top: 15px;
+    margin-left: 25px;
+    width: 50%;
+  }
+
+  .quotes {
+    position: relative;
+
+    font-size: 25px;
+    line-height: 30px;
+  }
+  /* .quotes-div {
+    margin-left: 25%;
+    margin-top: 2%;
+  } */
+}
+/* Only desktop */
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) {
+  .heading {
+    width: 50%;
+    margin-left: 35px;
+  }
+
+  .quotes {
+    position: relative;
+
+    font-size: 25px;
+    line-height: 30px;
+  }
+  /* .quotes-div {
+    margin-left: 25%;
+    margin-top: 2%;
+  } */
+  
+  .side-nav_header {
+    display: block;
+    position: fixed;
+    top: 30%;
+    left: 2px;
+    color: aliceblue;
+  }
+  .side-nav_mobile-nav {
+    display: none;
+  }
+  .side-nav {
+    display: block;
+    width: 80px;
+    position: fixed;
+    height: 30%;
+    top: 35%;
+    background-color: #ce93d82f;
+    left: 2%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 10px;
+    transition: all 0.2s ease-in;
+  }
+  .side-nav:hover {
+    width: 150px;
+  }
+  .menu {
+    /* margin-top: 1em; */
+    /* position: absolute;
+        right:2em ; */
+    width: 80px;
+  }
+  .menu ul li:last-child {
+    margin-top: 2em;
+  }
+  .side-bar_ul {
+    list-style-type: none;
+    right: 3em;
+  }
+  .side-bar_ul > a {
+    width: 80px;
+    position: relative;
+    right: 90%;
+    transition: all 0.2s ease-in;
+    color: white;
+    display: inline-block;
+    transform: scale(1);
+  }
+  .side-bar_ul > a:hover {
+    transform: scale(1.3);
+    color: #880e4f;
+  }
+  .side-bar_ul li > span {
+    opacity: 0;
+    position: relative;
+    bottom: 35px;
+    left: 60%;
+    transition: all 0.2s ease-in;
+  }
+  .side-nav:hover .side-bar_ul li > span {
+    left: 75%;
+    opacity: 1;
+  }
+  .card::after {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+
+  .card:hover::after {
+    opacity: 1;
+    transform: translateY(-10px);
+    animation: card 0.5s ease-in;
+  }
+}
