@@ -1,7 +1,8 @@
 <html>
   <head></head>
   <body>
-     <app-loading-element *ngIf="!allCovidData || !allAggData" ></app-loading-element>
+    <app-navbar></app-navbar>
+      <app-loading-element *ngIf="!allCovidData || !allAggData" ></app-loading-element>
    
     <div  class="container">
       <div class="row">

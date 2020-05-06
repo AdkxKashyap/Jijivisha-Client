@@ -10,24 +10,29 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     
-    document.addEventListener("click", this.animateNavLinks);
+    // this.navItems=document.getElementsByClassName("nav-item")
+    // this.navItems.forEach((item:Element)=>{
+    //   item.addEventListener("click",this.animateNavLinks)
+    // })
+    // document.addEventListener("click", this.animateNavLinks);
   }
-
+  navItems:any
   animateNavLinks(event) {
-    var elem=event.target as Element
-    var id = elem.id;
-    var className = "start-" + id;
-    document
-      .getElementById("animationDiv")
-      .classList.remove("start-home", "start-world", "start-news","start-mythb");
-    document.getElementById("animationDiv").classList.add(className);
+    // var elem=event.target as Element
+    // console.log(elem)
+    // var id = elem.id;
+    // var className = "start-" + id;
+    // document
+    //   .getElementById("animationDiv")
+    //   .classList.remove("start-home", "start-world", "start-news","start-mythb");
+    // document.getElementById("animationDiv").classList.add(className);
 
-    var navLinks=document.getElementsByClassName("nav-item")
+    // var navLinks=document.getElementsByClassName("nav-item")
     
-    for(let i=0;i<navLinks.length;i++){
-      navLinks[i].classList.remove("active")
-    }
-    elem.parentElement.classList.add("active")
+    // for(let i=0;i<navLinks.length;i++){
+    //   navLinks[i].classList.remove("active")
+    // }
+    // elem.parentElement.classList.add("active")
   }
 
  

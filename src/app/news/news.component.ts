@@ -12,38 +12,15 @@ export class NewsComponent implements OnInit,OnDestroy {
     private getLatestNewsService: GetLatestNewsService,
     private router: Router
   ) {}
-  ngOnDestroy(): void {
-    window.removeEventListener("scroll",()=>{
-      var indiaDiv=document.getElementById("india_news-div")
-      var worldDiv=document.getElementById("global_news-div")
-    
-      var indiaDivHeight=indiaDiv.clientHeight
-      var worldDivHeight=worldDiv.clientHeight
-      var windowHeight=window.innerHeight
-      var scrollY=window.scrollY || window.pageYOffset
-      
-      var scrollPos=scrollY+windowHeight
-      var indiaDivBeggPos=indiaDiv.getBoundingClientRect().top+scrollY
-      var indiaDivEndPos=indiaDiv.getBoundingClientRect().top+scrollY+indiaDivHeight
-      var worldDivBeggPos=worldDiv.getBoundingClientRect().top
-      var worldDivEndPos=worldDiv.getBoundingClientRect().top+scrollY+worldDivHeight
-      if(scrollPos>=indiaDivBeggPos && scrollPos<=indiaDivEndPos){
-        document.getElementById("side-nav_mobile-nav").innerHTML="Global"
-      }
-      else if(scrollPos>=worldDivBeggPos && scrollPos<=worldDivEndPos){
-        document.getElementById("side-nav_mobile-nav").innerHTML="India"
-      }
-    })
-  }
+ 
 
   ngOnInit() {
     //Navbar Init
     document.getElementById("animationDiv").classList.add("start-news");
     document.getElementsByClassName("nav-item")[2].classList.add("active");
     //adding event handlers
-    window.addEventListener('scroll',()=>{
+    window.addEventListener('scroll',this.test)
     
-    })
 
 
     //Get services
@@ -75,5 +52,30 @@ export class NewsComponent implements OnInit,OnDestroy {
    else if (event.target.innerHTML.toLowerCase().trim()=="india"){
     this.router.navigate(['./news'],{fragment:'india_news'})
   }
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener("scroll",this.test)
+  }
+  test(){
+      var indiaDiv=document.getElementById("india_news-div")
+      var worldDiv=document.getElementById("global_news-div")
+    
+      var indiaDivHeight=indiaDiv.clientHeight
+      var worldDivHeight=worldDiv.clientHeight
+      var windowHeight=window.innerHeight
+      var scrollY=window.scrollY || window.pageYOffset
+      
+      var scrollPos=scrollY+windowHeight
+      var indiaDivBeggPos=indiaDiv.getBoundingClientRect().top+scrollY
+      var indiaDivEndPos=indiaDiv.getBoundingClientRect().top+scrollY+indiaDivHeight
+      var worldDivBeggPos=worldDiv.getBoundingClientRect().top
+      var worldDivEndPos=worldDiv.getBoundingClientRect().top+scrollY+worldDivHeight
+      if(scrollPos>=indiaDivBeggPos && scrollPos<=indiaDivEndPos){
+        document.getElementById("side-nav_mobile-nav").innerHTML="Global"
+      }
+      else if(scrollPos>=worldDivBeggPos && scrollPos<=worldDivEndPos){
+        document.getElementById("side-nav_mobile-nav").innerHTML="India"
+      }
   }
  }

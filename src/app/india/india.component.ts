@@ -13,7 +13,6 @@ export class IndiaComponent implements OnInit {
   constructor(private getIndiaData: GetIndiaDataService) {}
 
   ngOnInit() {
-    console.log("From")
      //navbar init
      document.getElementById("animationDiv").classList.add("start-home");
      document.getElementsByClassName("nav-item")[0].classList.add("active");
@@ -372,5 +371,5 @@ export class IndiaComponent implements OnInit {
     this.lastUpdated = moment(date).fromNow();
     localStorage.setItem("dataLastUpdated",this.lastUpdated)
   }
-
+  
 }
