@@ -4,7 +4,7 @@
 
 export const environment = {
   GOOGLE_API_KEY: "YOUR KEY",
-  PORT: "https://jijivisha-backend.herokuapp.com",
+  PORT: "http://0.0.0.0:5001",
   production: false,
 };
 

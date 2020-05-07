@@ -21,6 +21,7 @@ export class MainComponentComponent implements OnInit {
     private fb: FormBuilder
   ) {}
   ngOnInit() {
+    
     //Navbar init
     document.getElementById("animationDiv").classList.add("start-world");
     document.getElementsByClassName("nav-item")[1].classList.add("active");
@@ -68,7 +69,8 @@ export class MainComponentComponent implements OnInit {
     });
 
     this.createtTableSearchForm();
-    
+    //Events inits
+    // document.getElementById("searchClear").addEventListener("click",this.clearSearch)
   }
 
   //variables
@@ -420,6 +422,15 @@ export class MainComponentComponent implements OnInit {
     localStorage.setItem("allInfectedCases", JSON.stringify(dataList));
   }
 
+  getMainDataofCountries() {
+    let dataList = [];
+    this.mainData.forEach((res) => {
+      if (res.type == "country") {
+        dataList.push(res);
+      }
+    });
+    localStorage.setItem("mainAllCountriesData", JSON.stringify(dataList));
+  }
   //search table
 
   createtTableSearchForm() {
@@ -429,6 +440,10 @@ export class MainComponentComponent implements OnInit {
   }
   searchTable() {
     let searchTxt = this.tableSearchForm.value.search.toLowerCase();
+    if(searchTxt=="")
+    {
+      console.log("null")
+    }
     let tRow = document
       .getElementById("data-table")
       .getElementsByTagName("tbody")[0]
@@ -445,13 +460,18 @@ export class MainComponentComponent implements OnInit {
     }
   }
 
-  getMainDataofCountries() {
-    let dataList = [];
-    this.mainData.forEach((res) => {
-      if (res.type == "country") {
-        dataList.push(res);
-      }
-    });
-    localStorage.setItem("mainAllCountriesData", JSON.stringify(dataList));
+  
+  clearSearch(){
+  (<HTMLInputElement>document.getElementById("searchBox")).value=""
+  this.tableSearchForm.value.search=""
+  let tRow = document
+  .getElementById("data-table")
+  .getElementsByTagName("tbody")[0]
+  .getElementsByTagName("tr");
+for (let i = 0; i < tRow.length; i++) {
+    if(tRow[i].style.display = "none"){
+      tRow[i].style.display=""
+    } 
+}
   }
 }
