@@ -36,7 +36,7 @@ export class IndiaComponent implements OnInit {
       this.latestMainData = res[res.length - 1].covid_data;
     
       localStorage.setItem("indiaData", JSON.stringify(this.latestMainData));
-      // this.geochartInit();
+      this.geochartInit();
 
       this.getdataLastUpdatedTime(res[res.length-1].published)
     });

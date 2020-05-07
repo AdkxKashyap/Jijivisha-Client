@@ -440,9 +440,11 @@ export class MainComponentComponent implements OnInit {
   }
   searchTable() {
     let searchTxt = this.tableSearchForm.value.search.toLowerCase();
-    if(searchTxt=="")
-    {
-      console.log("null")
+    if(searchTxt==""){
+      document.getElementById("searchClear").style.visibility="hidden"
+    }
+    else{
+      document.getElementById("searchClear").style.visibility="visible"
     }
     let tRow = document
       .getElementById("data-table")
@@ -463,6 +465,7 @@ export class MainComponentComponent implements OnInit {
   
   clearSearch(){
   (<HTMLInputElement>document.getElementById("searchBox")).value=""
+  document.getElementById("searchClear").style.visibility="hidden"
   this.tableSearchForm.value.search=""
   let tRow = document
   .getElementById("data-table")
