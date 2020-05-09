@@ -152,8 +152,7 @@ export class IndiaComponent implements OnInit {
     let totalDeathsList = [];
     let totalRecoveredList = [];
     let activeCasesList = [];
-
-    let countt = 1;
+    
     //Only need 8 out of total data for the charts
     let skip = Math.floor(resTotalCases.length / 7);
 
@@ -166,7 +165,7 @@ export class IndiaComponent implements OnInit {
       let tmpArrActiveCases = [];
 
       let date=resTotalCases[countTmp - 1].date
-      countTmp = countTmp + skip;
+      
       tmpArrTotalCases.push(date);
       tmpArrRecovered.push(date);
       tmpArrDeaths.push(date);
@@ -189,7 +188,7 @@ export class IndiaComponent implements OnInit {
       totalRecoveredList.push(tmpArrRecovered);
       totalDeathsList.push(tmpArrDeaths);
       activeCasesList.push(tmpArrActiveCases);
-      countt = countt + 1;
+      countTmp = countTmp + skip;
     }
     //pushing the first value
     totalCasesList.unshift(

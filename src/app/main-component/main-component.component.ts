@@ -174,7 +174,7 @@ export class MainComponentComponent implements OnInit {
       let tmpArrActiveCases = [];
 
       let date = resTotalCases[countTmp - 1].date;
-      countTmp = countTmp + skip;
+     
       tmpArrTotalCases.push(date);
       tmpArrRecovered.push(date);
       tmpArrDeaths.push(date);
@@ -197,6 +197,7 @@ export class MainComponentComponent implements OnInit {
       totalRecoveredList.push(tmpArrRecovered);
       totalDeathsList.push(tmpArrDeaths);
       activeCasesList.push(tmpArrActiveCases);
+      countTmp = countTmp + skip;
     }
     //pushing the first value
     totalCasesList.unshift(
