@@ -2,13 +2,11 @@
   <head>
     <Title>A COVID-19 Response Web Application.</Title>
   </head>
+
   <body>
     <app-navbar></app-navbar>
-    <app-loading-element
-    *ngIf="!mainData || !allAggData"
-  ></app-loading-element>
+    <app-loading-element *ngIf="!mainData || !allAggData"></app-loading-element>
     <div class="container">
-      
       <div class="row">
         <div class="col-md-8 col-sm-8 col-lg-7 header_1">
           <h1>World COVID-19 Tracker</h1>
@@ -58,7 +56,7 @@
           <div id="curve_chart_infectedcases" class="line_charts"></div>
         </div>
       </div>
-
+      <!-- Detailed Table -->
       <div data-aos="fade-up" class="row mt-5 all-data_div">
         <div class="col-sm-12 col-lg-12">
           <div class="col-lg-12 table-headline">
@@ -69,24 +67,23 @@
           <div id="searchBarDiv" class="col-lg-12 col-sm-12 col-xs-12">
             <form [formGroup]="tableSearchForm">
               <input
-              id="searchBox"
-              (keyup)="searchTable()"
-              
-              type="text"
-              class="table-search_bar"
-              placeholder="Search Country"
-              formControlName="search"
-            />
-            <i id="searchClear" (click)="clearSearch()" class="fas fa-times"></i>
+                id="searchBox"
+                (keyup)="searchTable()"
+                type="text"
+                class="table-search_bar"
+                placeholder="Search Country"
+                formControlName="search"
+              />
+              <i
+                id="searchClear"
+                (click)="clearSearch()"
+                class="fas fa-times"
+              ></i>
             </form>
           </div>
 
-          <div class="table-responsive">
-            <table
-              id="data-table"
-              class="table table-borderless table-hover"
-              style="max-height: 50px; height: 50px;"
-            >
+          <div id="data-table-main_div" class="table-responsive">
+            <table id="data-table" class="table table-stripped table-hover">
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">Country</th>
@@ -103,21 +100,8 @@
                   <th scope="col">Tests/1M Pop</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let data of mainData">
-                  <th scope="row">{{ data.country }}</th>
-                  <td>{{ data.total_cases }}</td>
-                  <td>{{ data.new_cases }}</td>
-                  <td>{{ data.total_deaths }}</td>
-                  <td>{{ data.new_deaths }}</td>
-                  <td>{{ data.total_recovered }}</td>
-                  <td>{{ data.active_cases }}</td>
-                  <td>{{ data.serious_or_critical }}</td>
-                  <td>{{ data.tot_cases_oneM_pop }}</td>
-                  <td>{{ data.deaths_oneM_pop }}</td>
-                  <td>{{ data.total_tests }}</td>
-                  <td>{{ data.tests_oneM_pop }}</td>
-                </tr>
+              <tbody id="data-table-body">
+               
               </tbody>
             </table>
           </div>

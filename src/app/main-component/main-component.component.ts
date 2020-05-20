@@ -21,13 +21,12 @@ export class MainComponentComponent implements OnInit {
     private fb: FormBuilder
   ) {}
   ngOnInit() {
-    
     //Navbar init
     document.getElementById("animationDiv").classList.add("start-world");
     document.getElementsByClassName("nav-item")[1].classList.add("active");
     //Scroll animations init
     AOS.init({
-      disableMutationObserver:false,
+      disableMutationObserver: false,
       offset: 200, // offset (in px) from the original trigger point
       delay: 0, // values from 0 to 3000, with step 50ms
       duration: 900, // values from 0 to 3000, with step 50ms
@@ -38,11 +37,12 @@ export class MainComponentComponent implements OnInit {
     });
     this.getCovidData.getData().subscribe((res) => {
       this.mainData = res[0].covid_data;
-      
+
       this.getMainDataofCountries();
       localStorage.setItem("mainData", JSON.stringify(res));
       this.getdataLastUpdatedTime();
-      this.geochartInit();
+      // this.geochartInit();
+      this.createTableBody()
     });
 
     this.getLatestlatestAggData.getData().subscribe((res) => {
@@ -64,7 +64,7 @@ export class MainComponentComponent implements OnInit {
     });
     // make google chart responsive
     window.addEventListener("resize", () => {
-      this.drawRegionsMap();
+      // this.drawRegionsMap();
       this.drawLineChart();
     });
 
@@ -174,7 +174,7 @@ export class MainComponentComponent implements OnInit {
       let tmpArrActiveCases = [];
 
       let date = resTotalCases[countTmp - 1].date;
-     
+
       tmpArrTotalCases.push(date);
       tmpArrRecovered.push(date);
       tmpArrDeaths.push(date);
@@ -439,13 +439,66 @@ export class MainComponentComponent implements OnInit {
       search: [""],
     });
   }
+
+  createTableBody() {
+    let dataTableBody=document.getElementById("data-table-body")
+    this.mainData.forEach((data)=>{
+      if(data.type=="country" && data.country!=""){
+        let newTableRow=document.createElement('tr')
+      let dataCountry=document.createElement('th')
+      let data_total_cases=document.createElement('td')
+      let data_new_cases=document.createElement('td')
+      let data_total_deaths=document.createElement('td')
+      let data_new_deaths=document.createElement('td')
+      let data_total_recovered=document.createElement('td')
+      let data_active_cases=document.createElement('td')
+      let data_serious_or_critical=document.createElement('td')
+      let data_tot_cases_oneM_pop=document.createElement('td')
+      let data_deaths_oneM_pop=document.createElement('td')
+      let data_total_tests =document.createElement('td')
+      let data_tests_oneM_pop  =document.createElement('td')
+
+      dataCountry.scope="row"
+      dataCountry.textContent=data.country
+      data_total_cases.textContent=data.total_cases
+      data_new_cases.textContent=data.new_cases
+      data_new_cases.style.color="red"
+      data_total_deaths.textContent=data.total_deaths
+      data_new_deaths.textContent=data.new_deaths
+      data_new_deaths.style.color="red"
+      data_total_recovered.textContent=data.total_recovered
+      data_active_cases.textContent=data.active_cases
+      data_serious_or_critical.textContent=data.serious_or_critical
+      data_tot_cases_oneM_pop.textContent=data.tot_cases_oneM_pop
+      data_deaths_oneM_pop.textContent=data.deaths_oneM_pop
+      data_total_tests.textContent=data.total_tests
+      data_tests_oneM_pop.textContent=data.tests_oneM_pop
+
+      newTableRow.appendChild(dataCountry)
+      newTableRow.appendChild(data_total_cases)
+      newTableRow.appendChild(data_new_cases)
+      newTableRow.appendChild(data_total_deaths)
+      newTableRow.appendChild(data_new_deaths)
+      newTableRow.appendChild(data_total_recovered)
+      newTableRow.appendChild(data_active_cases)
+      newTableRow.appendChild(data_serious_or_critical)
+      newTableRow.appendChild(data_tot_cases_oneM_pop)
+      newTableRow.appendChild(data_deaths_oneM_pop)
+      newTableRow.appendChild(data_total_tests)
+      newTableRow.appendChild(data_tests_oneM_pop)
+      dataTableBody.appendChild(newTableRow)
+      }
+      
+
+    })
+  }
+
   searchTable() {
     let searchTxt = this.tableSearchForm.value.search.toLowerCase();
-    if(searchTxt==""){
-      document.getElementById("searchClear").style.visibility="hidden"
-    }
-    else{
-      document.getElementById("searchClear").style.visibility="visible"
+    if (searchTxt == "") {
+      document.getElementById("searchClear").style.visibility = "hidden";
+    } else {
+      document.getElementById("searchClear").style.visibility = "visible";
     }
     let tRow = document
       .getElementById("data-table")
@@ -463,19 +516,18 @@ export class MainComponentComponent implements OnInit {
     }
   }
 
-  
-  clearSearch(){
-  (<HTMLInputElement>document.getElementById("searchBox")).value=""
-  document.getElementById("searchClear").style.visibility="hidden"
-  this.tableSearchForm.value.search=""
-  let tRow = document
-  .getElementById("data-table")
-  .getElementsByTagName("tbody")[0]
-  .getElementsByTagName("tr");
-for (let i = 0; i < tRow.length; i++) {
-    if(tRow[i].style.display = "none"){
-      tRow[i].style.display=""
-    } 
-}
+  clearSearch() {
+    (<HTMLInputElement>document.getElementById("searchBox")).value = "";
+    document.getElementById("searchClear").style.visibility = "hidden";
+    this.tableSearchForm.value.search = "";
+    let tRow = document
+      .getElementById("data-table")
+      .getElementsByTagName("tbody")[0]
+      .getElementsByTagName("tr");
+    for (let i = 0; i < tRow.length; i++) {
+      if ((tRow[i].style.display = "none")) {
+        tRow[i].style.display = "";
+      }
+    }
   }
 }
