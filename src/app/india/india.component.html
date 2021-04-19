@@ -2,7 +2,7 @@
   <head></head>
   <body>
     <app-navbar></app-navbar>
-      <app-loading-element *ngIf="!allCovidData || !allAggData" ></app-loading-element>
+      <app-loading-element *ngIf="!latestMainData || !allAggData" ></app-loading-element>
    
     <div  class="container">
       <div class="row">
@@ -78,7 +78,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let data of latestMainData">
-                  <th scope="row">{{ data.state }}</th>
+                 <a routerLink="/district/{{data.state}}"><th scope="row">{{ data.state }}</th></a>
                   <td>{{ data.confirmed }}</td>
                   <td>{{ data.recovered }}</td>
                   <td>{{ data.deaths}}</td>

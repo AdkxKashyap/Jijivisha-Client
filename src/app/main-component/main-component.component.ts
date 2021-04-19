@@ -41,7 +41,7 @@ export class MainComponentComponent implements OnInit {
       this.getMainDataofCountries();
       localStorage.setItem("mainData", JSON.stringify(res));
       this.getdataLastUpdatedTime();
-      // this.geochartInit();
+      this.geochartInit();
       this.createTableBody()
     });
 
@@ -148,32 +148,34 @@ export class MainComponentComponent implements OnInit {
   }
   drawLineChart() {
     //Organizing data
-    var resTotalCases = JSON.parse(localStorage.getItem("allCovidCasesList"));
-    var resTotalDeaths = JSON.parse(localStorage.getItem("allDeathCases"));
-    var resTotalRecovered = JSON.parse(
+    var resTotalCases:any[] = JSON.parse(localStorage.getItem("allCovidCasesList"));
+    var resTotalDeaths:any[] = JSON.parse(localStorage.getItem("allDeathCases"));
+    var resTotalRecovered:any[] = JSON.parse(
       localStorage.getItem("allRecoveredCases")
     );
-    var resTotalActiveCases = JSON.parse(
+    var resTotalActiveCases:any[] = JSON.parse(
       localStorage.getItem("allInfectedCases")
     );
-
+      console.log(resTotalCases)
     let totalCasesList = [];
     let totalDeathsList = [];
     let totalRecoveredList = [];
     let activeCasesList = [];
 
     //Only need 8 out of total data for the charts
-    let skip = Math.floor(resTotalCases.length / 7);
+    // let skip = Math.floor(resTotalCases.length / 7);
 
-    //the loop does not insert the first and last value in the array,those values are required and to be added later
-    let countTmp = skip;
-    while (countTmp < 7 * Math.floor(resTotalCases.length / 7)) {
+    // //the loop does not insert the first and last value in the array,those values are required and to be added later
+    // let countTmp = skip;
+    var countTmp=0
+    var data_len=resTotalCases.length
+    while (countTmp < data_len) {
       let tmpArrTotalCases = [];
       let tmpArrRecovered = [];
       let tmpArrDeaths = [];
       let tmpArrActiveCases = [];
 
-      let date = resTotalCases[countTmp - 1].date;
+      let date = resTotalCases[countTmp].date;
 
       tmpArrTotalCases.push(date);
       tmpArrRecovered.push(date);
@@ -181,77 +183,68 @@ export class MainComponentComponent implements OnInit {
       tmpArrActiveCases.push(date);
 
       tmpArrTotalCases.push(
-        parseInt(resTotalCases[countTmp - 1].data.replace(/,/g, ""))
+        parseInt(resTotalCases[countTmp].data.replace(/,/g, ""))
       );
       tmpArrRecovered.push(
-        parseInt(resTotalRecovered[countTmp - 1].data.replace(/,/g, ""))
+        parseInt(resTotalRecovered[countTmp].data.replace(/,/g, ""))
       );
       tmpArrDeaths.push(
-        parseInt(resTotalDeaths[countTmp - 1].data.replace(/,/g, ""))
+        parseInt(resTotalDeaths[countTmp].data.replace(/,/g, ""))
       );
       tmpArrActiveCases.push(
-        parseInt(resTotalActiveCases[countTmp - 1].data.replace(/,/g, ""))
+        parseInt(resTotalActiveCases[countTmp].data.replace(/,/g, ""))
       );
 
       totalCasesList.push(tmpArrTotalCases);
       totalRecoveredList.push(tmpArrRecovered);
       totalDeathsList.push(tmpArrDeaths);
       activeCasesList.push(tmpArrActiveCases);
-      countTmp = countTmp + skip;
+      countTmp = countTmp + 1;
     }
     //pushing the first value
     totalCasesList.unshift(
       [["Date"], ["Total Cases"]],
-      [resTotalCases[0].date, parseInt(resTotalCases[0].data.replace(/,/g, ""))]
+      
     );
     totalRecoveredList.unshift(
       [["Date"], ["Recovred"]],
-      [
-        resTotalCases[0].date,
-        parseInt(resTotalRecovered[0].data.replace(/,/g, "")),
-      ]
+     
     );
     totalDeathsList.unshift(
       [["Date"], ["Deaths"]],
-      [
-        resTotalCases[0].date,
-        parseInt(resTotalDeaths[0].data.replace(/,/g, "")),
-      ]
+     
     );
     activeCasesList.unshift(
       [["Date"], ["Total Active Cases"]],
-      [
-        resTotalCases[0].date,
-        parseInt(resTotalActiveCases[0].data.replace(/,/g, "")),
-      ]
+     
     );
     //pushing the last value
-    let pubDate = resTotalCases[resTotalCases.length - 1].date;
-    totalCasesList.push([
-      pubDate,
-      parseInt(resTotalCases[resTotalCases.length - 1].data.replace(/,/g, "")),
-    ]);
-    totalRecoveredList.push([
-      pubDate,
-      parseInt(
-        resTotalRecovered[resTotalRecovered.length - 1].data.replace(/,/g, "")
-      ),
-    ]);
-    totalDeathsList.push([
-      pubDate,
-      parseInt(
-        resTotalDeaths[resTotalDeaths.length - 1].data.replace(/,/g, "")
-      ),
-    ]);
-    activeCasesList.push([
-      pubDate,
-      parseInt(
-        resTotalActiveCases[resTotalActiveCases.length - 1].data.replace(
-          /,/g,
-          ""
-        )
-      ),
-    ]);
+    // let pubDate = resTotalCases[resTotalCases.length - 1].date;
+    // totalCasesList.push([
+    //   pubDate,
+    //   parseInt(resTotalCases[resTotalCases.length - 1].data.replace(/,/g, "")),
+    // ]);
+    // totalRecoveredList.push([
+    //   pubDate,
+    //   parseInt(
+    //     resTotalRecovered[resTotalRecovered.length - 1].data.replace(/,/g, "")
+    //   ),
+    // ]);
+    // totalDeathsList.push([
+    //   pubDate,
+    //   parseInt(
+    //     resTotalDeaths[resTotalDeaths.length - 1].data.replace(/,/g, "")
+    //   ),
+    // ]);
+    // activeCasesList.push([
+    //   pubDate,
+    //   parseInt(
+    //     resTotalActiveCases[resTotalActiveCases.length - 1].data.replace(
+    //       /,/g,
+    //       ""
+    //     )
+    //   ),
+    // ]);
 
     // //Chart for total cases
     var dataTotalCases = google.visualization.arrayToDataTable(totalCasesList);

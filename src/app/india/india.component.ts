@@ -32,20 +32,21 @@ export class IndiaComponent implements OnInit {
    
     //get state wise data forom India
     this.getIndiaData.getData().subscribe((res) => {
-      this.allCovidData = res;
-      this.latestMainData = res[res.length - 1].covid_data;
-    
+      // this.allCovidData = res;
+      this.latestMainData = res[0].covid_data;
       localStorage.setItem("indiaData", JSON.stringify(this.latestMainData));
       this.geochartInit();
 
-      this.getdataLastUpdatedTime(res[res.length-1].published)
+      this.getdataLastUpdatedTime(res[0].published)
     });
 
     //get all the aggregated data from india
     this.getIndiaData.getAllAggData().subscribe((res) => {
       this.allAggData = res;
-      this.getAllAggCovidCasesData();
       this.getLatestAggCovidCases();
+      // console.log(this.allAggData)
+      this.getAllAggCovidCasesData();
+      
       this.lineChartInit();
     });
 
@@ -95,17 +96,18 @@ export class IndiaComponent implements OnInit {
 
   drawRegionsMap() {
     var data_main = JSON.parse(localStorage.getItem("indiaData"));
+    
     var dataArray = [];
     dataArray[0] = ["State", "Total Cases", "Deaths"];
     data_main.forEach((data) => {
       let tmpArr = [];
 
-      let activeCases = data.confirmed.replace(",", "");
+      let activeCases = data.confirmed
       var state = data.state;
       if (state.toLowerCase() == "odisha") {
         state = "Orissa";
       }
-      let deaths = parseInt(data.deaths.replace(",", ""));
+      let deaths = parseInt(data.deaths);
       tmpArr.push(state);
       tmpArr.push(parseInt(activeCases));
       tmpArr.push(deaths);
@@ -134,37 +136,37 @@ export class IndiaComponent implements OnInit {
   }
 
   drawLineChart() {
-    //Chart for total cases
-    var resTotalCases = JSON.parse(
+    // Chart for total cases
+    var resTotalCases:any[] = JSON.parse(
       localStorage.getItem("allIndiaAggCovidCasesData")
     ).allTotalCasesList;
-    var resTotalDeaths = JSON.parse(
+    var resTotalDeaths:any[] = JSON.parse(
       localStorage.getItem("allIndiaAggCovidCasesData")
     ).allTotalDeathsList;
-    var resTotalRecovered = JSON.parse(
+    var resTotalRecovered:any[] = JSON.parse(
       localStorage.getItem("allIndiaAggCovidCasesData")
     ).allTotalRecoveredCasesList;
-    var resTotalActiveCases = JSON.parse(
+    var resTotalActiveCases:any[] = JSON.parse(
       localStorage.getItem("allIndiaAggCovidCasesData")
     ).allTotalActiveCasesList;
-
+      console.log(resTotalCases)
+      console.log(resTotalDeaths)
+      console.log(resTotalRecovered)
     let totalCasesList = [];
     let totalDeathsList = [];
     let totalRecoveredList = [];
     let activeCasesList = [];
     
-    //Only need 8 out of total data for the charts
-    let skip = Math.floor(resTotalCases.length / 7);
+    let dataLen=resTotalCases.length
+    let countTmp=0
 
-    //the loop does not insert the first and last value in the array,those values are required and to be added later
-    let countTmp = skip;
-    while (countTmp < 7 * Math.floor(resTotalCases.length / 7)) {
+    while (countTmp < dataLen) {
       let tmpArrTotalCases = [];
       let tmpArrRecovered = [];
       let tmpArrDeaths = [];
       let tmpArrActiveCases = [];
 
-      let date=resTotalCases[countTmp - 1].date
+      let date=resTotalCases[countTmp].date
       
       tmpArrTotalCases.push(date);
       tmpArrRecovered.push(date);
@@ -172,64 +174,40 @@ export class IndiaComponent implements OnInit {
       tmpArrActiveCases.push(date);
 
       tmpArrTotalCases.push(
-        parseInt(resTotalCases[countTmp - 1].data.replace(/,/g, ""))
+        parseInt(resTotalCases[countTmp].data.replace(/,/g, ""))
       );
       tmpArrRecovered.push(
-        parseInt(resTotalRecovered[countTmp - 1].data.replace(/,/g, ""))
+        parseInt(resTotalRecovered[countTmp].data.replace(/,/g, ""))
       );
       tmpArrDeaths.push(
-        parseInt(resTotalDeaths[countTmp - 1].data.replace(/,/g, ""))
+        parseInt(resTotalDeaths[countTmp].data.replace(/,/g, ""))
       );
       tmpArrActiveCases.push(
-        parseInt(resTotalActiveCases[countTmp - 1].data.replace(/,/g, ""))
+        parseInt(resTotalActiveCases[countTmp].data.replace(/,/g, ""))
       );
 
       totalCasesList.push(tmpArrTotalCases);
       totalRecoveredList.push(tmpArrRecovered);
       totalDeathsList.push(tmpArrDeaths);
       activeCasesList.push(tmpArrActiveCases);
-      countTmp = countTmp + skip;
-    }
+      countTmp = countTmp + 1;
+    } 
     //pushing the first value
     totalCasesList.unshift(
       [["Date"], ["Total Cases"]],
-      [resTotalCases[0].date, parseInt(resTotalCases[0].data.replace(/,/g, ""))]
     );
     totalRecoveredList.unshift(
-      [["Date"], ["Recovred"]],
-      [resTotalCases[0].date, parseInt(resTotalRecovered[0].data.replace(/,/g, ""))]
+      [["Date"], ["Recovered"]],
+      
     );
     totalDeathsList.unshift(
       [["Date"], ["Deaths"]],
-      [resTotalCases[0].date, parseInt(resTotalDeaths[0].data.replace(/,/g, ""))]
+      
     );
     activeCasesList.unshift(
       [["Date"], ["Total Active Cases"]],
-      [resTotalCases[0].date, parseInt(resTotalActiveCases[0].data.replace(/,/g, ""))]
     );
-    //pushing the last value
-    let pubDate=resTotalCases[resTotalCases.length - 1].date
-    totalCasesList.push([
-      pubDate,
-      parseInt(resTotalCases[resTotalCases.length - 1].data.replace(/,/g, "")),
-    ]);
-    totalRecoveredList.push([
-      pubDate,
-      parseInt(
-        resTotalRecovered[resTotalRecovered.length - 1].data.replace(/,/g, "")
-      ),
-    ]);
-    totalDeathsList.push([
-      pubDate,
-      parseInt(resTotalDeaths[resTotalDeaths.length - 1].data.replace(/,/g, "")),
-    ]);
-    activeCasesList.push([
-      pubDate,
-      parseInt(
-        resTotalActiveCases[resTotalActiveCases.length - 1].data.replace(/,/g, "")
-      ),
-    ]);
-
+   
     // //For Total Cases Chart
     var dataTotalCases = google.visualization.arrayToDataTable(totalCasesList);
     var optionsTotalCases = {
@@ -330,6 +308,7 @@ export class IndiaComponent implements OnInit {
     let allData = this.allAggData;
     let pubDate:Date
     let dateStr=""
+    // console.log("allData",allData)
     allData.forEach((data) => {
        pubDate=new Date(data.published) 
       dateStr=pubDate.getDate().toString()+this.monthsIndex[pubDate.getMonth()]
@@ -362,12 +341,14 @@ export class IndiaComponent implements OnInit {
       recovered: latestData.total_recovered,
       activeCases: latestData.active_cases,
     };
+    // console.log(this.latestAggDataDict)
   }
 
   getdataLastUpdatedTime(res) {
     var date = new Date(res).getTime();
     var now = Date.now();
     this.lastUpdated = moment(date).fromNow();
+    // console.log(this.lastUpdated)
     localStorage.setItem("dataLastUpdated",this.lastUpdated)
   }
   
