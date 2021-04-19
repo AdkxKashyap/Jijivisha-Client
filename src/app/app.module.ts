@@ -19,6 +19,7 @@ import { LoadingElementComponent } from './loading-element/loading-element.compo
 import { MythBustersComponent } from './myth-busters/myth-busters.component';
 import { GetMythbusterService } from './Service/GetMythBusters/get-mythbuster.service';
 import { FooterComponent } from './footer/footer.component';
+import { IndiaDistrictComponent } from './india-district/india-district.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FooterComponent } from './footer/footer.component';
     FloatBtnComponent,
     LoadingElementComponent,
     MythBustersComponent,
-    FooterComponent
+    FooterComponent,
+    IndiaDistrictComponent
   ],
   imports: [
     BrowserModule,

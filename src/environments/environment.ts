@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  GOOGLE_API_KEY: "YOUR KEY",
-  PORT: "http://0.0.0.0:5001",
+  GOOGLE_API_KEY: "AIzaSyDQ-NY96lWaRELL-rF0K495c4ulwLNvgM0",
+  PORT: "http://localhost:5001",
   production: false,
 };
 

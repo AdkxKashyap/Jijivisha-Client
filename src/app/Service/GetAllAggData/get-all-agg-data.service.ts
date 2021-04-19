@@ -10,7 +10,7 @@ export class GetAllAggDataService {
   constructor(private http:HttpClient) { }
   url:any
   getData():Observable<any>{
-    this.url=environment.PORT+"/Jijivisha/v1.0/GetAllAggData"
+    this.url=environment.PORT+"/Jijivisha/v1.0/GetAllAggData?N=12"
     return this.http.get(this.url)
   }
 }

@@ -1,0 +1,78 @@
+
+<html>
+    <head></head>
+    <body>
+        <app-navbar></app-navbar>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-lg-7 header_1">
+                  <h1>{{state}}</h1>
+                </div>
+                <div class="col-md-4 col-sm-4 col-lg-5 header_1">
+                  <h5 class="header_2">Last Updated:{{ lastUpdated }}</h5>
+                </div>
+              
+              </div>
+              <div data-aos="fade-up" id="line-charts_div" class="row line_charts-div mt-5 cards">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <h5 style="color: #0277bd;">Total Cases:</h5>
+                  <h3 style="color: #01579b;">{{ latestStateData.confirmed }}</h3>
+                  <div id="curve_chart_totalcases" class="line_charts"></div>
+                </div>
+        
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <h5 style="color: #0277bd;">Recovered:</h5>
+                  <h3 style="color: #01579b;">{{  latestStateData.recovered  }}</h3>
+                  <div id="curve_chart_totalrecovered" class="line_charts"></div>
+                </div>
+        
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <h5 style="color: #0277bd;">Deaths:</h5>
+                  <h3 style="color: #01579b;">{{ latestStateData.deaths }}</h3>
+                  <div id="curve_chart_totaldeaths" class="line_charts"></div>
+                </div>
+        
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <h5 style="color: #0277bd;">Total Tested:</h5>
+                  <h3 style="color: #01579b;">{{ latestStateData.tested }}</h3>
+                  <div id="curve_chart_activecases" class="line_charts"></div>
+                </div>
+              </div>
+
+              <div data-aos="fade-up" class="row mt-5 all-data_div cards">
+                <div class="col-sm-12 col-lg-12"> 
+                  <div class="col-lg-12 table-headline">
+                    <p style="color: #aa00ff; margin-left: 30%;">
+                      District Data:
+                    </p>
+                  </div>
+                  <div *ngIf="districtsDataList" class="table-responsive" >
+                    <table id="data-table" class="table table-stripped table-hover" style="max-height: 50px; height: 50px;">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">District</th>
+                          <th scope="col">Total Cases</th>
+                          <th scope="col">Recovered</th>
+                          <th scope="col">Deaths</th>   
+                          <th scope="col">Tested</th>      
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of districtsDataList">
+                         <th scope="row">{{ data.district }}</th>
+                          <td>{{ data.total }}</td>
+                          <td>{{ data.recovered }}</td>
+                          <td>{{ data.deaths}}</td>
+                          <td>{{ data.tested}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div *ngIf="!districtsDataList">
+                   <h4>District data of {{state}} is not available currently.</h4> 
+                  </div>
+                  </div>
+        </div>
+        </div>
+    </body>
+</html>
