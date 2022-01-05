@@ -20,6 +20,7 @@ import { MythBustersComponent } from './myth-busters/myth-busters.component';
 import { GetMythbusterService } from './Service/GetMythBusters/get-mythbuster.service';
 import { FooterComponent } from './footer/footer.component';
 import { IndiaDistrictComponent } from './india-district/india-district.component';
+import { GetLatestPublishedDateService } from './Service/GetLatestPubDate/get-latest-published-date.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { IndiaDistrictComponent } from './india-district/india-district.componen
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [GetCovidDataService,GetLatestAggDataService,GetAllAggDataService,GetIndiaDataService,GetLatestNewsService,GetMythbusterService],
+  providers: [GetCovidDataService,GetLatestAggDataService,GetAllAggDataService,GetIndiaDataService,GetLatestNewsService,GetMythbusterService,GetLatestPublishedDateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

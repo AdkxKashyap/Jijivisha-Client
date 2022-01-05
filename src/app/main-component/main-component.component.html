@@ -5,7 +5,7 @@
 
   <body>
     <app-navbar></app-navbar>
-    <app-loading-element *ngIf="!mainData || !allAggData"></app-loading-element>
+    <app-loading-element *ngIf="!isCurrentDataUpdated && (!mainData || !allAggData)"></app-loading-element>
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-sm-8 col-lg-7 header_1">

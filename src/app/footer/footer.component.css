@@ -6,7 +6,7 @@
   /* bottom: 0; */
   width: 100%;
   height: 200px;
-  margin-top: 15px;
+  margin-top: 0.1vh;
   background: #da22ff; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,

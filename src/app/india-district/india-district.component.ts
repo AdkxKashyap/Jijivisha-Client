@@ -15,7 +15,9 @@ export class IndiaDistrictComponent implements OnInit {
   constructor(private route:ActivatedRoute,private getAllIndiaData:GetIndiaDataService) { }
 
   ngOnInit() {
-
+    //navbar init
+    document.getElementById("animationDiv").classList.add("start-home");
+    document.getElementsByClassName("nav-item")[0].classList.add("active");
     //for scroll animations
     AOS.init({
       disableMutationObserver:false,
@@ -34,10 +36,8 @@ export class IndiaDistrictComponent implements OnInit {
     this.getAllIndiaData.getDistrictsData(this.state).subscribe(res=>{
       
       this.districtsData=JSON.parse(res[0].covid_data[0].districts)
-      console.log(this.districtsData)
       localStorage.setItem("districtData",JSON.stringify(this.districtsData))
       this.districtsDataList=this.getDistrictDataList()
-
       console.log(this.districtsDataList)
     },err=>{
       alert(err)

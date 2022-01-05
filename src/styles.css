@@ -6,17 +6,17 @@ html{
     scroll-behavior: smooth;
 }
 .container{
-    margin-top: 15%;
+    margin-top: 10vh;
   }
 
-  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  /* @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
     .container{
         margin-top: 10%;
       }
-  }
+  }*/
 
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-height: 900px) {
     .container{
-        margin-top: 5%;
+        margin-top: 8vh;
       }
-  }
+  } 

@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { GetCovidDataService } from "../Service/GetCovidData/get-covid-data.service";
 import { environment } from "../../environments/environment";
-import * as moment from "moment";
+import {Router} from '@angular/router';
 import { GetLatestAggDataService } from "../Service/GetCovidData/GetLatestAggCOVIDData/get-latest-agg-data.service";
 import { GetAllAggDataService } from "../Service/GetAllAggData/get-all-agg-data.service";
-import { FormGroup, FormControl } from "@angular/forms";
 import { FormBuilder } from "@angular/forms";
+import { GetLatestPublishedDateService } from "../Service/GetLatestPubDate/get-latest-published-date.service";
 declare const google: any;
 declare const AOS: any;
 @Component({
@@ -16,9 +16,11 @@ declare const AOS: any;
 export class MainComponentComponent implements OnInit {
   constructor(
     private getCovidData: GetCovidDataService,
-    private getLatestlatestAggData: GetLatestAggDataService,
+    private getLatestAggData: GetLatestAggDataService,
     private getAlllatestAggData: GetAllAggDataService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private checkDataUpdated:GetLatestPublishedDateService ,
+    private router:Router
   ) {}
   ngOnInit() {
     //Navbar init
@@ -35,33 +37,9 @@ export class MainComponentComponent implements OnInit {
       mirror: false, // whether elements should animate out while scrolling past them
       anchorPlacement: "top-bottom", // defines which position of the element regarding to window should trigger the animation
     });
-    this.getCovidData.getData().subscribe((res) => {
-      this.mainData = res[0].covid_data;
-
-      this.getMainDataofCountries();
-      localStorage.setItem("mainData", JSON.stringify(res));
-      this.getdataLastUpdatedTime();
-      this.geochartInit();
-      this.createTableBody()
-    });
-
-    this.getLatestlatestAggData.getData().subscribe((res) => {
-      this.latestAggData = res[0].agg_covid_data;
-      this.aggTotCases = this.latestAggData.covid19_cases;
-      this.aggDeathCases = this.latestAggData.total_deaths;
-      this.aggRecoveredCases = this.latestAggData.total_recovered;
-      this.aggActiveCases = this.latestAggData.total_infected;
-    });
-
-    this.getAlllatestAggData.getData().subscribe((res) => {
-      this.allAggData = res;
-      this.getAllCovidCases();
-      this.getTotalDeaths();
-      this.getTotalRecovered();
-      this.getTotalInfected();
-      this.lineChartInit();
-      // localStorage.setItem("allGlobalLatestData",)
-    });
+    
+//check latest pub date from localstorage if available.If updated data is available in cache,cache data is used else data fetched from server.
+    this.checkLatestPubDate()
     // make google chart responsive
     window.addEventListener("resize", () => {
       // this.drawRegionsMap();
@@ -83,6 +61,7 @@ export class MainComponentComponent implements OnInit {
   aggRecoveredCases: any;
   aggActiveCases: any;
   tableSearchForm: any;
+  isCurrentDataUpdated:any;
   monthsIndex = [
     "Jan",
     "Feb",
@@ -97,6 +76,39 @@ export class MainComponentComponent implements OnInit {
     "Nov",
     "Dec",
   ];
+
+  fetchLatestData(){
+    this.getCovidData.getData().subscribe((res) => {
+      this.mainData = res[0].covid_data;
+      this.getMainDataofCountries();
+      localStorage.setItem("mainData", JSON.stringify(res));
+      localStorage.setItem('World_latestPublishedDate', res[0].published);
+      this.setdataLastUpdatedTime();
+      this.geochartInit();
+      this.createTableBody()
+    });
+
+    this.getLatestAggData.getData().subscribe((res) => {
+      this.latestAggData = res[0].agg_covid_data;
+      localStorage.setItem('latestAggData', JSON.stringify(this.latestAggData));
+      this.aggTotCases = this.latestAggData.covid19_cases;
+      this.aggDeathCases = this.latestAggData.total_deaths;
+      this.aggRecoveredCases = this.latestAggData.total_recovered;
+      this.aggActiveCases = this.latestAggData.total_infected;
+    });
+
+
+
+    this.getAlllatestAggData.getData().subscribe((res) => {
+      this.allAggData = res;
+      this.getAllCovidCases();
+      this.getTotalDeaths();
+      this.getTotalRecovered();
+      this.getTotalInfected();
+      this.lineChartInit();
+      // localStorage.setItem("allGlobalLatestData",)
+    });
+  }
 
   geochartInit() {
     google.charts.load("current", {
@@ -156,7 +168,6 @@ export class MainComponentComponent implements OnInit {
     var resTotalActiveCases:any[] = JSON.parse(
       localStorage.getItem("allInfectedCases")
     );
-      console.log(resTotalCases)
     let totalCasesList = [];
     let totalDeathsList = [];
     let totalRecoveredList = [];
@@ -346,8 +357,11 @@ export class MainComponentComponent implements OnInit {
     chartForInfected.draw(chartDataInfected, chartOptionsInfected);
   }
 
-  getdataLastUpdatedTime() {
+  setdataLastUpdatedTime() {
+    //this is for the last updated header
     this.lastUpdated = localStorage.getItem("dataLastUpdated");
+    //set data last updated for world
+
   }
 
   getAllCovidCases() {
@@ -416,6 +430,14 @@ export class MainComponentComponent implements OnInit {
     localStorage.setItem("allInfectedCases", JSON.stringify(dataList));
   }
 
+  setLatestAggData(){
+    let latestAggData = JSON.parse(localStorage.getItem("latestAggData"))
+    this.aggTotCases = latestAggData.covid19_cases;
+      this.aggDeathCases = latestAggData.total_deaths;
+      this.aggRecoveredCases = latestAggData.total_recovered;
+      this.aggActiveCases = latestAggData.total_infected;
+  }
+
   getMainDataofCountries() {
     let dataList = [];
     this.mainData.forEach((res) => {
@@ -434,8 +456,10 @@ export class MainComponentComponent implements OnInit {
   }
 
   createTableBody() {
+
+    let mainData = JSON.parse(localStorage.getItem("mainAllCountriesData"))
     let dataTableBody=document.getElementById("data-table-body")
-    this.mainData.forEach((data)=>{
+    mainData.forEach((data)=>{
       if(data.type=="country" && data.country!=""){
         let newTableRow=document.createElement('tr')
       let dataCountry=document.createElement('th')
@@ -523,4 +547,41 @@ export class MainComponentComponent implements OnInit {
       }
     }
   }
+
+  //check if latest pub date is available in localstorage
+  //check if latest pub date is up to date
+  checkLatestPubDate(){
+  let date = localStorage.getItem('World_latestPublishedDate')
+  // let date = "2020-06-16 20:16:21.145714"
+  if(!date) {
+    this.navigateToComponent('')
+    this.isCurrentDataUpdated = false;
+    this.fetchLatestData()
+  }
+  else if(date){
+    this.checkDataUpdated.isDataUpdated(date).subscribe(res=>{
+      if(res == false){
+        this.isCurrentDataUpdated = false;
+        this.fetchLatestData()
+        // this.navigateToComponent('');
+      }
+      else if(res == true){
+        this.geochartInit();
+        this.createTableBody();
+        this.setLatestAggData();
+        this.lineChartInit();
+        this.setdataLastUpdatedTime();
+        this.isCurrentDataUpdated = true;
+      }
+    })
+  }  
+}
+
+navigateToComponent(component:string){
+  this.router.navigate([component]).then(res=>{
+    if(res == false){
+      this.router.navigate(['']);
+    }
+  })
+}
 }

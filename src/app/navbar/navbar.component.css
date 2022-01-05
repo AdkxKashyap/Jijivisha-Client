@@ -17,25 +17,18 @@
   color: aliceblue;
   font-size: 20px;
 }
-.nav-item {
-  transition: all 0.2s ease-in;
-  transform: scale(1);
-}
-
 .active {
   color: aliceblue;
 }
-
-/* Only desktop */
 .nav-item {
   font-size: 15px;
-  
-
   line-height: 50px;
   position: relative;
   z-index: 1;
   display: inline-block;
   text-align: center;
+  transition: all 0.2s ease-in;
+  transform: scale(1);
 }
 .active {
   color: aliceblue;
@@ -51,56 +44,56 @@
   top: 0;
   z-index: 0;
   background: #CB356B;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #BD3F32, #CB356B);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #BD3F32, #CB356B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  
+  background: -webkit-linear-gradient(to right, #BD3F32, #CB356B);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #BD3F32, #CB356B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-radius: 8px;
   transition: all 0.5s ease;
 }
-@media screen and (width: 1200px){
+@media screen and (min-width: 1200px){
 
+  .navbar-nav{
+    position: relative;
+    margin-left: 4vw;
+  }
+  .nav-item{
+    font-size: 1vw;
+  }
 
-  ul li:nth-child(1) {
-    /* width: 100px; */
-    /* margin-right: 1.5em;
-    margin-left: 1em; */
-    width: 100px;
+  ul li:nth-child(1) {  
+    width: 7vw;
   }
 
   .start-home,
   ul li:nth-child(1):hover ~ .animation {
-    width: 110px;
-    left: 420px;
+    width: 7vw;
+    left: 0vw;
   }
   ul li:nth-child(2) {
-    width: 100px;
-    /* margin-right: 1.5em; */
+    width: 7vw;
   }
   .start-world,
-  ul li:nth-child(2):hover ~ .animation {
-    width: 110px;
-    left: 520px;
+  ul li:nth-child(2):hover ~ .animation { 
+    width: 7vw;
+    left: 7vw;
   }
   ul li:nth-child(3) {
-    width: 100px;
+    width: 7vw;
   }
   .start-news,
   ul li:nth-child(3):hover ~ .animation {
-    width: 110px;
-    left: 620px;
+    width: 7vw;
+    left: 14vw;
   }
   ul li:nth-child(4) {
-    width: 150px;
-    /* margin-left: 5em; */
+    width: 9vw;
   }
   .start-mythb,
   ul li:nth-child(4):hover ~ .animation {
-    width: 160px;
-    left: 720px;
+    width: 9vw;
+    left: 21vw;
   }
 }
-@media screen and (width: 1500px){
+/* @media screen and (width: 1500px){
   
 
   ul li:nth-child(1) {
@@ -176,5 +169,5 @@ background: linear-gradient(to right, #BD3F32, #CB356B); /* W3C, IE 10+/ Edge, F
     width: 160px;
     left: 820px;
   }
-}
+} */
 

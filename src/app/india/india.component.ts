@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { GetIndiaDataService } from "../Service/GetAllIndiaData/get-india-data.service";
 import * as moment from "moment"
 import { environment } from "../../environments/environment";
+import { GetLatestPublishedDateService } from "../Service/GetLatestPubDate/get-latest-published-date.service";
 declare const google: any;
 declare const AOS: any;
 @Component({
@@ -10,7 +11,7 @@ declare const AOS: any;
   styleUrls: ["./india.component.css"],
 })
 export class IndiaComponent implements OnInit {
-  constructor(private getIndiaData: GetIndiaDataService) {}
+  constructor(private getIndiaData: GetIndiaDataService, private checkDataUpdated: GetLatestPublishedDateService) {}
 
   ngOnInit() {
      //navbar init
@@ -29,30 +30,15 @@ export class IndiaComponent implements OnInit {
       mirror: false, // whether elements should animate out while scrolling past them
       anchorPlacement: "top-bottom", // defines which position of the element regarding to window should trigger the animation
     });
-   
-    //get state wise data forom India
-    this.getIndiaData.getData().subscribe((res) => {
-      // this.allCovidData = res;
-      this.latestMainData = res[0].covid_data;
-      localStorage.setItem("indiaData", JSON.stringify(this.latestMainData));
-      this.geochartInit();
-
-      this.getdataLastUpdatedTime(res[0].published)
-    });
-
-    //get all the aggregated data from india
-    this.getIndiaData.getAllAggData().subscribe((res) => {
-      this.allAggData = res;
-      this.getLatestAggCovidCases();
-      // console.log(this.allAggData)
-      this.getAllAggCovidCasesData();
-      
-      this.lineChartInit();
-    });
+    
+    //check latest pub date from localstorage if available.If updated data is available in cache,cache data is used else data fetched from server.
+    this.checkLatestPubDate()
+    
+    
 
     // make google chart responsive
     window.addEventListener("resize", () => {
-      this.drawRegionsMap();
+      // this.drawRegionsMap();
       this.drawLineChart();
     });
 
@@ -72,13 +58,14 @@ export class IndiaComponent implements OnInit {
     ];
   }
   //variables
-  latestMainData: any;
+  allIndianStatesData: any;
   lastUpdated: any;
   allCovidData: any;
   allAggData: any;
   latestAggDataDict: any;
   allAggCovidCasesData: {};
   monthsIndex:(string)[]
+  isCurrentDataUpdated:boolean;
   //Init Geo Charts
   geochartInit() {
     google.charts.load("current", {
@@ -93,17 +80,40 @@ export class IndiaComponent implements OnInit {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(this.drawLineChart);
   }
+  fetchLatestData(){
+    /** this method fetches latest data from server if current data in localstorage is outdated or there is no data   */
+    
+    //get state wise data form India
+    this.getIndiaData.getData().subscribe((res) => {
+      localStorage.setItem("latestPublishedDate",res[0].published)
+      this.setAllIndianStatesData(res[0].covid_data)
+      localStorage.setItem("indiaData", JSON.stringify(this.allIndianStatesData));
+      this.geochartInit();
+      this.setdataLastUpdatedTime()
+    });
 
+    //get all the aggregated data from india
+    this.getIndiaData.getAllAggData().subscribe((res) => {
+      this.setAllAggData(res);
+      localStorage.setItem("allAggData", JSON.stringify(this.allAggData))
+      this.getLatestAggCovidCases();
+      this.getAllAggCovidCasesData();
+      
+      this.lineChartInit();
+    });
+  }
   drawRegionsMap() {
     var data_main = JSON.parse(localStorage.getItem("indiaData"));
-    
+    console.log(data_main);
     var dataArray = [];
     dataArray[0] = ["State", "Total Cases", "Deaths"];
     data_main.forEach((data) => {
+      
       let tmpArr = [];
 
       let activeCases = data.confirmed
       var state = data.state;
+      if(state == null) return;
       if (state.toLowerCase() == "odisha") {
         state = "Orissa";
       }
@@ -149,9 +159,6 @@ export class IndiaComponent implements OnInit {
     var resTotalActiveCases:any[] = JSON.parse(
       localStorage.getItem("allIndiaAggCovidCasesData")
     ).allTotalActiveCasesList;
-      console.log(resTotalCases)
-      console.log(resTotalDeaths)
-      console.log(resTotalRecovered)
     let totalCasesList = [];
     let totalDeathsList = [];
     let totalRecoveredList = [];
@@ -298,8 +305,16 @@ export class IndiaComponent implements OnInit {
     );
     chartActive.draw(dataActive, optionsActive);
   }
+  setAllIndianStatesData(data){
+    /**This method will set data used by the table and google map vizualization */
+    this.allIndianStatesData = data;
+  }
 
-  //This func will give all the aggregated data
+  setAllAggData(data){
+    /**This method will set data used by google line chart vizualization */
+    this.allAggData = data;
+  }
+  //This method will give all the aggregated data which is used by line chart
   getAllAggCovidCasesData() {
     let allCasesList = [];
     let allRecoveredList = [];
@@ -331,9 +346,10 @@ export class IndiaComponent implements OnInit {
       JSON.stringify(this.allAggCovidCasesData)
     );
   }
-  //This func will only give the latest aggregated data
+  //This method will only give the latest aggregated data,used by main counter
   getLatestAggCovidCases() {
-    let latestData = this.allAggData[this.allAggData.length - 1].covid_data[0];
+    let allAggData:any[] = JSON.parse(localStorage.getItem("allAggData"))
+    let latestData = allAggData[allAggData.length - 1].covid_data[0];
 
     this.latestAggDataDict = {
       totalCases: latestData.total_cases,
@@ -344,12 +360,37 @@ export class IndiaComponent implements OnInit {
     // console.log(this.latestAggDataDict)
   }
 
-  getdataLastUpdatedTime(res) {
+  setdataLastUpdatedTime() {
+    var res = localStorage.getItem('latestPublishedDate')
     var date = new Date(res).getTime();
-    var now = Date.now();
     this.lastUpdated = moment(date).fromNow();
     // console.log(this.lastUpdated)
     localStorage.setItem("dataLastUpdated",this.lastUpdated)
   }
-  
+  //check if latest pub date is available in localstorage
+  //check if latest pub date is up to date
+  checkLatestPubDate(){
+    let date = localStorage.getItem('latestPublishedDate')
+    if(!date) {
+      this.isCurrentDataUpdated = false;
+      this.fetchLatestData()
+    }
+    else if(date){
+      this.checkDataUpdated.isDataUpdated(date).subscribe(res=>{
+        if(res == false){
+          this.isCurrentDataUpdated = false;
+          this.fetchLatestData()
+        }
+        else if(res == true){
+          this.geochartInit();
+          this.setdataLastUpdatedTime()
+          this.setAllIndianStatesData(JSON.parse(localStorage.getItem("indiaData")))
+          this.setAllAggData(JSON.parse(localStorage.getItem("allAggData")))
+          this.lineChartInit();
+          this.getLatestAggCovidCases()
+          this.isCurrentDataUpdated = true;
+        }
+      })
+    }  
+  }
 }
