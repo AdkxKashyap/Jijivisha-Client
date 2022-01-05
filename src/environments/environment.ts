@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  GOOGLE_API_KEY: "AIzaSyDCJ7DfvyTM2BgYkgN3OZm7HK4xvMXCuD0",
+  GOOGLE_API_KEY: "",
   PORT: "https://jijivisha-backend.herokuapp.com",
   production: false,
 };
