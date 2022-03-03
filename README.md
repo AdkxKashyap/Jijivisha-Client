@@ -28,7 +28,7 @@
 <h3 align="center">Jijivisha</h3>
 
   <p align="center">
-     Project jijivisha a Covid Response Project. This Project consists of a Web Crawler, Flask API, Angular Application. 
+     Project jijivisha is a Covid Response Application. This Project consists of a Web Crawler, Flask API, Angular Application. 
       <ol>
     <li>
     <a href="https://github.com/AdkxKashyap/Jijivisha-WebScraping-Script">Web Crawler - This application gathers data from various sources on the internet. It gathers data like total cases, total recovered, latest news etc.</a>
