@@ -16,8 +16,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -79,7 +77,7 @@
 
 <!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `AdkxKashyap`, `Jijivisha-Client`, `twitter_handle`, `adkx1010`, `gmail`, `akashdeepk619`, `jijivisha`, `jijivisha is social media web appliction where uses can share posts , make new friends , share their ideas and many more things.` -->
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 ### Built With
 
@@ -93,7 +91,6 @@
 - [HTML/CSS/JS]
 - [Heroku]
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
@@ -120,16 +117,15 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    npm install
    ```
-4. Enter your API in `src/environments/environvent.ts`.
-    Note - Do not change Port
+3. Enter your API in `src/environments/environvent.ts`.
+   Note - Do not change Port
    ```js
     GOOGLE_API_KEY = YOUR GOOGLE API KEY. PLEASE CHECK GOOGLE DEV CONSOLE
    ```
-5. Start Server
-    ```sh
+4. Start Server
+   ```sh
    ng s
    ```
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 
@@ -138,11 +134,6 @@ This is an example of how to list things you need to use the software and how to
 
 
 _For more information, please refer to the [Documentation](https://documenter.getpostman.com/view/3712938/UVeCQTf6)_ -->
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 <!-- CONTRIBUTING -->
 
 ## Contributing
@@ -160,18 +151,15 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- CONTACT -->
 
 ## Contact
 
-[@linkedin](https://linkedin.com/in/adkx1010) . akashdeepk619@gmail.com 
+[@linkedin](https://linkedin.com/in/adkx1010) . akashdeepk619@gmail.com
 
 Project Link: [https://github.com/AdkxKashyap/Jijivisha-Client](https://github.com/AdkxKashyap/Jijivisha-Client)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
