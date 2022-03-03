@@ -31,13 +31,13 @@
      Project jijivisha a Covid Response Project. This Project consists of a Web Crawler, Flask API, Angular Application. 
       <ol>
     <li>
-    <a href="https://github.com/AdkxKashyap/Jijivisha-WebScraping-Script">Web Crawler - It gathers data from various sources on the internet. It gathers data like total cases, total recovered, latest news etc.</a>
+    <a href="https://github.com/AdkxKashyap/Jijivisha-WebScraping-Script">Web Crawler - This application gathers data from various sources on the internet. It gathers data like total cases, total recovered, latest news etc.</a>
     </li>
     <li>
-     <a href="https://github.com/AdkxKashyap/Jijivisha-Server">FlaskAPI - This API powers the angular application.</a>
+     <a href="https://github.com/AdkxKashyap/Jijivisha-Server">FlaskAPI - This API powers the angular application. It fetches the data from mongoDB, processes the data and sends it to client.</a>
     </li>
     <li>
-    <a href="https://github.com/AdkxKashyap/Jijivisha-Client">Angular App - This is the main app whichs gets the data from api and displays to user.</a> 
+    <a href="https://github.com/AdkxKashyap/Jijivisha-Client">Angular App - This is the main app whichs gets the data from api and displays to the user.</a> 
     </li>
   </ol>  
     <br />
@@ -87,9 +87,11 @@
 - [Flask]
 - [MongoDB]
 - [BeautifulSoup]
+- [Node]
 - [Angular]
 - [Bootstrap]
 - [HTML/CSS/JS]
+- [Heroku]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
