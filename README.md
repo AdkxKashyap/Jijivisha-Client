@@ -42,7 +42,6 @@
     <a href="https://documenter.getpostman.com/view/3712938/UVkiTeJi"><strong>Explore the api docs »</strong></a>
     <br />
     <br />
-    <a href="https://jijivisha.herokuapp.com">View Demo</a>
   </p>
 </div>
 
